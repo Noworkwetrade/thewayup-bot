@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TheWayUp Bot</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: #0a0a0c;
+      color: #e5e5e5;
+      width: 380px;
+      padding: 16px;
+      border: 1px solid #2a2415;
+    }
+
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Header & Branding */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #2a2415;
+      padding-bottom: 10px;
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #fff3a1 0%, #d4af37 50%, #aa7c11 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+    }
+
+    .status-badge {
+      font-size: 11px;
+      color: #d4af37;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Cards */
+    .card {
+      background: #121216;
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px solid #2a2415;
+    }
+
+    .card-title {
+      font-size: 11px;
+      color: #d4af37;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 700;
+    }
+
+    /* Candlestick Monitor Display */
+    .candle-monitor {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #060608;
+      border: 1px solid #1f1b10;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .price-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .candle-type {
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+
+    .candle-up { background: rgba(0, 230, 118, 0.2); color: #00e676; }
+    .candle-down { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    /* Buttons / Selectors */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .btn-tab, .btn-tf {
+      background-color: #121216;
+      border: 1px solid #2a2415;
+      color: #a0a0a0;
+      padding: 8px 4px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-tab.active, .btn-tf.active {
+      background: linear-gradient(135deg, #d4af37, #aa7c11);
+      color: #000;
+      font-weight: bold;
+      border-color: #fff3a1;
+    }
+
+    .select-box {
+      width: 100%;
+      background: #121216;
+      border: 1px solid #2a2415;
+      border-radius: 6px;
+      padding: 8px;
+      color: #ffd700;
+      font-weight: 600;
+      outline: none;
+    }
+
+    /* Golden Action Button */
+    .btn-gold {
+      width: 100%;
+      background: linear-gradient(135deg, #ffe57f 0%, #d4af37 50%, #996515 100%);
+      color: #000;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+    }
+
+    .btn-gold:hover {
+      opacity: 0.95;
+    }
+
+    /* Signal Display */
+    .signal-output {
+      display: none;
+      text-align: center;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .signal-output.CALL {
+      display: block;
+      background: rgba(0, 230, 118, 0.1);
+      border: 1px solid #00e676;
+      color: #00e676;
+    }
+
+    .signal-output.PUT {
+      display: block;
+      background: rgba(255, 82, 82, 0.1);
+      border: 1px solid #ff5252;
+      color: #ff5252;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <div class="header">
+    <div class="brand">TheWayUp Bot</div>
+    <div class="status-badge" id="ws-status">DISCONNECTED</div>
+  </div>
+
+  <!-- Realtime Candlestick Feed Card -->
+  <div class="card">
+    <div class="card-title">Live WebSocket Candle Data</div>
+    <div class="candle-monitor">
+      <div>
+        <div style="font-size:10px; color:#888;">CLOSE PRICE</div>
+        <div class="price-value" id="close-price">0.00000</div>
+      </div>
+      <div id="candle-status" class="candle-type candle-up">WAITING</div>
+    </div>
+  </div>
+
+  <!-- Asset Selection -->
+  <div>
+    <div class="card-title">Active Asset</div>
+    <select class="select-box" id="pair-select">
+      <option value="EURUSD_otc">EUR/USD OTC</option>
+      <option value="GBPUSD_otc">GBP/USD OTC</option>
+      <option value="USDJPY_otc">USD/JPY OTC</option>
+      <option value="AUDCAD_otc">AUD/CAD OTC</option>
+      <option value="BTCUSD">BTC/USD</option>
+    </select>
+  </div>
+
+  <!-- Timeframe -->
+  <div>
+    <div class="card-title">Timeframe</div>
+    <div class="grid">
+      <button class="btn-tf" data-tf="5">5 sec</button>
+      <button class="btn-tf active" data-tf="15">15 sec</button>
+      <button class="btn-tf" data-tf="60">1 min</button>
+      <button class="btn-tf" data-tf="300">5 min</button>
+      <button class="btn-tf" data-tf="900">15 min</button>
+    </div>
+  </div>
+
+  <!-- Execution Button -->
+  <button class="btn-gold" id="btn-generate">🎯 Analyze & Signal</button>
+
+  <!-- Output Signal -->
+  <div id="signal-output" class="signal-output"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
+
