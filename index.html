@@ -15,7 +15,7 @@
     body {
       background-color: #0a0a0c;
       color: #e5e5e5;
-      width: 380px;
+      width: 340px;
       padding: 16px;
       border: 1px solid #2a2415;
     }
@@ -26,7 +26,6 @@
       gap: 14px;
     }
 
-    /* Header & Branding */
     .header {
       display: flex;
       justify-content: space-between;
@@ -47,15 +46,14 @@
 
     .status-badge {
       font-size: 11px;
-      color: #d4af37;
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: #ff5252;
+      background: rgba(255, 82, 82, 0.1);
+      border: 1px solid rgba(255, 82, 82, 0.3);
       padding: 3px 8px;
       border-radius: 4px;
       font-weight: 600;
     }
 
-    /* Cards */
     .card {
       background: #121216;
       border-radius: 10px;
@@ -72,7 +70,6 @@
       font-weight: 700;
     }
 
-    /* Candlestick Monitor Display */
     .candle-monitor {
       display: flex;
       justify-content: space-between;
@@ -90,23 +87,22 @@
     }
 
     .candle-type {
-      font-size: 12px;
-      padding: 2px 6px;
-      border-radius: 3px;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 4px;
       font-weight: bold;
     }
 
-    .candle-up { background: rgba(0, 230, 118, 0.2); color: #00e676; }
-    .candle-down { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+    .candle-up { background: rgba(0, 230, 118, 0.2); color: #00e676; border: 1px solid #00e676; }
+    .candle-down { background: rgba(255, 82, 82, 0.2); color: #ff5252; border: 1px solid #ff5252; }
 
-    /* Buttons / Selectors */
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 6px;
     }
 
-    .btn-tab, .btn-tf {
+    .btn-tf {
       background-color: #121216;
       border: 1px solid #2a2415;
       color: #a0a0a0;
@@ -114,10 +110,9 @@
       border-radius: 6px;
       font-size: 11px;
       cursor: pointer;
-      transition: all 0.2s;
     }
 
-    .btn-tab.active, .btn-tf.active {
+    .btn-tf.active {
       background: linear-gradient(135deg, #d4af37, #aa7c11);
       color: #000;
       font-weight: bold;
@@ -135,7 +130,6 @@
       outline: none;
     }
 
-    /* Golden Action Button */
     .btn-gold {
       width: 100%;
       background: linear-gradient(135deg, #ffe57f 0%, #d4af37 50%, #996515 100%);
@@ -150,17 +144,12 @@
       box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
     }
 
-    .btn-gold:hover {
-      opacity: 0.95;
-    }
-
-    /* Signal Display */
     .signal-output {
       display: none;
       text-align: center;
-      padding: 14px;
+      padding: 12px;
       border-radius: 8px;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 900;
       letter-spacing: 2px;
     }
@@ -185,10 +174,9 @@
 <div class="app-container">
   <div class="header">
     <div class="brand">TheWayUp Bot</div>
-    <div class="status-badge" id="ws-status">DISCONNECTED</div>
+    <div class="status-badge" id="ws-status">OFFLINE</div>
   </div>
 
-  <!-- Realtime Candlestick Feed Card -->
   <div class="card">
     <div class="card-title">Live WebSocket Candle Data</div>
     <div class="candle-monitor">
@@ -200,7 +188,6 @@
     </div>
   </div>
 
-  <!-- Asset Selection -->
   <div>
     <div class="card-title">Active Asset</div>
     <select class="select-box" id="pair-select">
@@ -212,7 +199,6 @@
     </select>
   </div>
 
-  <!-- Timeframe -->
   <div>
     <div class="card-title">Timeframe</div>
     <div class="grid">
@@ -224,14 +210,11 @@
     </div>
   </div>
 
-  <!-- Execution Button -->
   <button class="btn-gold" id="btn-generate">🎯 Analyze & Signal</button>
 
-  <!-- Output Signal -->
   <div id="signal-output" class="signal-output"></div>
 </div>
 
 <script src="app.js"></script>
 </body>
 </html>
-
