@@ -57,42 +57,86 @@
     .card {
       background: #121216;
       border-radius: 10px;
-      padding: 12px;
+      padding: 14px;
       border: 1px solid #2a2415;
+      text-align: center;
     }
 
     .card-title {
       font-size: 11px;
       color: #d4af37;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       text-transform: uppercase;
       letter-spacing: 0.8px;
       font-weight: 700;
     }
 
-    .candle-monitor {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #060608;
-      border: 1px solid #1f1b10;
-      border-radius: 8px;
-      padding: 10px;
-    }
-
-    .price-value {
+    .active-pair {
       font-size: 16px;
       font-weight: 700;
       color: #ffffff;
+      margin-bottom: 4px;
     }
 
-    .candle-type {
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-weight: bold;
+    .timestamp {
+      font-size: 10px;
+      color: #777;
+      margin-top: 4px;
     }
 
+    .signal-output {
+      margin-top: 10px;
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      display: none;
+    }
+
+    .signal-output.BUY {
+      display: block;
+      background: rgba(0, 230, 118, 0.12);
+      border: 1px solid #00e676;
+      color: #00e676;
+    }
+
+    .signal-output.SELL {
+      display: block;
+      background: rgba(255, 82, 82, 0.12);
+      border: 1px solid #ff5252;
+      color: #ff5252;
+    }
+
+    .signal-output.WAITING {
+      display: block;
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid #2a2415;
+      color: #d4af37;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <div class="header">
+    <div class="brand">TheWayUp Bot</div>
+    <div class="status-badge" id="ws-status">SCANNING</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">OTC Market Scanner (1M)</div>
+    <div class="active-pair" id="signal-pair">SCANNING OTC PAIRS...</div>
+    <div id="signal-box" class="signal-output WAITING">ANALYZING SETUPS</div>
+    <div class="timestamp" id="signal-time">Watching all OTC pairs...</div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
     .candle-up { background: rgba(0, 230, 118, 0.2); color: #00e676; border: 1px solid #00e676; }
     .candle-down { background: rgba(255, 82, 82, 0.2); color: #ff5252; border: 1px solid #ff5252; }
 
