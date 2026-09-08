@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "TheWayUp Bot",
+  "version": "1.0.0",
+  "description": "Black & Gold Luxury Real-Time Binary Trading Bot",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "wss://*.po.market/*",
+    "https://*.po.market/*"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "icon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
+
