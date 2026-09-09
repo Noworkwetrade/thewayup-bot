@@ -1,0 +1,36 @@
+{
+  "name": "nwwt-pocket-option-signal-bot",
+  "version": "1.0.0",
+  "description": "NWWT Pocket Option Signal Bot - Real-time market analysis and candlestick pattern detection",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test tests/*.test.js",
+    "test:connection": "node tests/test-connection.js",
+    "test:candles": "node tests/test-candles.js",
+    "test:patterns": "node tests/test-patterns.js",
+    "lint": "eslint src/**/*.js"
+  },
+  "keywords": [
+    "pocket-option",
+    "trading",
+    "signal-bot",
+    "nwwt-strategy",
+    "candlestick-patterns",
+    "technical-analysis"
+  ],
+  "author": "NWWT",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "ws": "^8.18.1",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0"
+  }
+}
